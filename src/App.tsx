@@ -1,25 +1,48 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';   
+import Navbar from './components/Navbar';
+import ConfigurationScreen from './Screens/ConfigurationScreen';
+import HomeScreen from './Screens/HomeScreen';
+import LoginScreen from './Screens/LoginScreen';
+import ManageData from './Screens/ManageData';
+import RegistaredMembersScreen from './Screens/RegistaredMembersScreen';
+import TestimonyScreen from './Screens/TestimonyScreen';  
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  
+
+  function ScrollToTop() {  
+
+    const location = useLocation()
+    React.useEffect(() => {
+      
+      window.scrollTo(0, 0);
+    }, [location])
+  
+    return null
+  } 
+  const [hide, setHide] = React.useState(false)
+
+  return ( 
+    <>
+      <ChakraProvider>
+        <Router> 
+        <div className='w-full h-40' >
+          <Navbar hide={hide} />
+        </div>  
+          <ScrollToTop />
+          <Routes>    
+            <Route path='/' element={<LoginScreen hide={setHide} />}/> 
+            <Route path='/dashboard' element={<HomeScreen hide={setHide} />}/> 
+            <Route path='/members' element={<RegistaredMembersScreen />}/> 
+            <Route path='/attendance' element={<ManageData />}/> 
+            <Route path='/testimony' element={<TestimonyScreen />}/> 
+            <Route path='/settings' element={<ConfigurationScreen />}/> 
+          </Routes>
+        </Router>
+      </ChakraProvider>
+    </>
   );
 }
 
