@@ -10,7 +10,7 @@ export default function LoginScreen(props:any) {
  
     const [showpassword, setShowpass] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const [tokenvalue, setToken] = React.useState(''); 
+    const [tokenvalue, setToken] = React.useState(localStorage.getItem('token')+''); 
 
     const handleShowpassword = () => {
         setShowpass(prev => !prev);
@@ -29,11 +29,10 @@ export default function LoginScreen(props:any) {
     });  
 
     React.useEffect(() => {  
-        localStorage.setItem('token', tokenvalue);  
-        const token = localStorage.getItem('token')
-        if(token === '' ){
-            navigate('/dashboard')
-        }
+        localStorage.setItem('token', tokenvalue);   
+        // if(token === '' ){
+        //     navigate('/dashboard')
+        // }
     });  
 
     React.useEffect(() => {
@@ -63,7 +62,7 @@ export default function LoginScreen(props:any) {
             console.log(json)
     
             if (request.status === 200) {    
-                setToken(json.accessToken)    
+                setToken(json.token)    
                 localStorage.setItem('token',json.token)
                 const t1 = setTimeout(() => { 
                     navigate('/dashboard');  

@@ -4,28 +4,78 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'; 
 import { Input } from '@chakra-ui/input';
 import { Textarea } from '@chakra-ui/react';
+import * as axios from 'axios'   
 
 export default function QuoteModal(props: any) {
 
     const presentDate = new Date()
+    const [loading, setLoading] = React.useState(false);
 
-    const loginSchema = yup.object({  
-        title: yup.string().required('Required'),   
+    const loginSchema = yup.object({   
         description: yup.string().required('Required'), 
     }) 
  
     const formik = useFormik({
-        initialValues: {title: '', description: ''},
+        initialValues: {description: ''},
         validationSchema: loginSchema,
         onSubmit: () => {},
-    });  
+    });   
+    
+    const submit = async () => {
+
+        setLoading(true)
+        if (!formik.dirty) {
+          alert('You have to fill in th form to continue'); 
+        }else if (!formik.isValid) {
+          alert('You have to fill in the form correctly to continue'); 
+        } else {
+            try { 
+
+                // make request to server
+                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/quotes`, formik.values, {
+                        headers: { 'content-type': 'application/json',
+                        Authorization : `Bearer ${localStorage.getItem('token')}` 
+                    }
+                })   
+    
+            // const json = await request.json();
+    
+            console.log('Status '+request.status)
+    
+            if (request.status === 200) {    
+                // console.log(json)  
+                const t1 = setTimeout(() => { 
+                    props.close(false)
+                    clearTimeout(t1);
+                }, 1000); 
+            }else {
+                // alert(json.message);
+                // console.log(json)
+                // setLoading(false);
+            }
+                    
+            } catch (error) {
+                console.log(error)
+            } 
+        }
+        setLoading(false)
+    } 
+
+    const DateFormat =(item: any)=>{ 
+        var date = new Date(item);
+        let string = date+'' 
+        console.log()
+        return( 
+            <p className=' font-Montserrat-Medium text-xs' >{string.substr(4, 11)}</p>
+        )
+    }
 
     return (
         <div className='bg-white pb-20' style={{width: '900px'}} >
             <div style={{backgroundColor: '#28166F'}} className=' w-full flex items-center  px-12 h-28' >
                 <div> 
                     <p className='text-xl text-white font-Poppins-Medium ' >Manage C.O’s Quotes</p>
-                    <p className='text-sm text-white font-Poppins-Regular mt-2 ' >{presentDate.toLocaleDateString()}</p>
+                    <p className='text-sm text-white font-Poppins-Regular mt-2 ' >{DateFormat(presentDate)}</p>
                 </div>
                 <div onClick={()=> props.close(false)} className='w-8 h-8 ml-auto rounded-full border border-white cursor-pointer flex justify-center items-center' >
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +104,55 @@ export default function QuoteModal(props: any) {
                     )}
                 </div>  
                 <div className='w-full flex' >
-                    <button style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >Add Quote</button>
+
+                    <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                        {loading ?
+                            <>
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 200 200"
+                                    color="#FFF"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className='mr-4'>
+                                    <defs>
+                                        <linearGradient id="spinner-secondHalf">
+                                        <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                        </linearGradient>
+                                        <linearGradient id="spinner-firstHalf">
+                                        <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <g stroke-width="8">
+                                        <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                        <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                                    
+                                        <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        d="M 4 100 A 96 96 0 0 1 4 98"
+                                        />
+                                    </g>
+
+                                    <animateTransform
+                                        from="0 0 0"
+                                        to="360 0 0"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        repeatCount="indefinite"
+                                        dur="1300ms"
+                                    />
+                                </svg>
+                                Loading
+                            </>
+                        :
+                            'Add Quote'}
+                    </button>
+                    {/* <button style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >Add Quote</button> */}
                 </div>
             </div>
         </div>

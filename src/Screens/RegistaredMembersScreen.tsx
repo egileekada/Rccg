@@ -1,6 +1,7 @@
 import { Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react';
 import React from 'react';
-import Flag from '../assets/images/flag.png'
+import { useQuery } from 'react-query';
+import Flag from '../assets/images/flag.png' 
 
 const Information = [
     {
@@ -40,7 +41,19 @@ const Information = [
     },
 ]
 
-export default function RegistaredMembersScreen() {
+export default function RegistaredMembersScreen() { 
+
+    const { isLoading, data } = useQuery('Registered', () =>
+        fetch(`https://rccg-web-api.herokuapp.com/first-timers`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',  
+            }
+        }).then(res =>
+            res.json()
+        )
+    ) 
+
     return(
         <div className='w-full px-8  ' >
             <div className='w-full flex items-center' >
@@ -50,31 +63,76 @@ export default function RegistaredMembersScreen() {
                 </div> 
             </div>
             <div className='bg-white w-full py-6' > 
-                <Table variant='unstyled' >
-                    {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-                    <Thead>
-                        <Tr style={{color: '#727272'}} className='font-Poppins-Medium text-sm' >
-                            <Th>Full Name</Th>
-                            <Th>Phone</Th> 
-                            <Th>Email Address</Th> 
-                            <Th>Parish Name</Th> 
-                            <Th>Location</Th>  
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {Information.map((item, index)=> {
-                            return(
-                                <Tr className='font-Poppins-Regular text-sm' key={index} > 
-                                    <Td>{item.name}</Td>
-                                    <Td>{item.phone}</Td>
-                                    <Td>{item.email}</Td>
-                                    <Td>{item.church}</Td> 
-                                    <Td className='flex items-center' ><img src={Flag} className='rounded-full mr-3' alt='nig' />{item.location}</Td> 
-                                </Tr> 
-                            )
-                        })}
-                    </Tbody> 
-                </Table>
+
+                {isLoading ?
+                    <div className='w-full flex justify-center items-center h-20 mt-10' > 
+                        <svg
+                            width="70"
+                            height="70"
+                            viewBox="0 0 200 200"
+                            color="#28166F"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className='mr-4'>
+                            <defs>
+                                <linearGradient id="spinner-secondHalf">
+                                <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                </linearGradient>
+                                <linearGradient id="spinner-firstHalf">
+                                <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                </linearGradient>
+                            </defs>
+
+                            <g stroke-width="8">
+                                <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                            
+                                <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                d="M 4 100 A 96 96 0 0 1 4 98"
+                                />
+                            </g>
+
+                            <animateTransform
+                                from="0 0 0"
+                                to="360 0 0"
+                                attributeName="transform"
+                                type="rotate"
+                                repeatCount="indefinite"
+                                dur="1300ms"
+                            />
+                        </svg>
+                    </div>
+                : 
+                    <Table variant='unstyled' >
+                        {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+                        <Thead>
+                            <Tr style={{color: '#727272'}} className='font-Poppins-Medium text-sm' >
+                                <Th>Full Name</Th>
+                                <Th>Phone</Th> 
+                                <Th>Email Address</Th> 
+                                <Th>Parish Name</Th> 
+                                <Th>Location</Th>  
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {data.map((item: any)=> {
+                                return(
+                                    <Tr className='font-Poppins-Regular text-sm' > 
+                                        <Td>{item.fullName}</Td>
+                                        <Td>{item.phone}</Td>
+                                        <Td>{item.email}</Td>
+                                        <Td>{item.church}</Td> 
+                                        <Td className='flex items-center' ><img src={Flag} className='rounded-full mr-3' alt='nig' />{item.location}</Td> 
+                                    </Tr> 
+                                )
+                            })}
+                        </Tbody> 
+                    </Table>
+                }
             </div>
         </div>
     )

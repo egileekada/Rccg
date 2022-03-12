@@ -4,14 +4,39 @@ import logo from '../assets/images/logo.png'
 
 export default function Navbar(props: any) {
 
-    const [tab, setTab] = React.useState(0)
+    const [tab, setTab] = React.useState('dashboard')
     const [hide, setHide] = React.useState(false)
     const navigate = useNavigate() 
 
-    const ClickHandler =(index: any, path: any)=> {
-        setTab(index) 
+    const ClickHandler =(path: any)=> {
+        setTab(path) 
+        localStorage.setItem('navbar', path+'')
         navigate('/'+path)
-    }
+    } 
+
+    React.useEffect(() => {
+        if(!localStorage.getItem('navbar')){
+            setTab('dashboard')
+            localStorage.setItem('navbar', 'dashboard')
+            return
+        }
+        setTab(localStorage.getItem('navbar')+'')
+    },)
+
+
+    React.useEffect(() => { 
+        if(localStorage.getItem('navbar')+'' === 'dashboard'){
+            navigate('/dashboard')
+        } else if(localStorage.getItem('navbar')+'' === 'members'){
+            navigate('/members')
+        } else if(localStorage.getItem('navbar')+'' === 'attendance'){
+            navigate('/attendance')
+        } else if(localStorage.getItem('navbar')+'' === 'testimony'){
+            navigate('/testimony')
+        } else if(localStorage.getItem('navbar')+'' === 'settings'){
+            navigate('/settings')
+        }
+    },[]) 
 
     React.useEffect(() => {
         setHide(props.hide)
@@ -24,11 +49,11 @@ export default function Navbar(props: any) {
             {!hide ?
                 <>
                     <div className='mx-auto Poppins-Regular flex items-center text-sm'>
-                        <p onClick={()=> ClickHandler(0, 'dashboard')} className={tab === 0 ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Share Info</p>
-                        <p onClick={()=> ClickHandler(1, 'members')} className={tab === 1 ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Reg Members</p>
-                        <p onClick={()=> ClickHandler(2, 'attendance')} className={tab === 2 ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Data Mangement</p>
-                        <p onClick={()=> ClickHandler(3, 'testimony')} className={tab === 3 ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Testimonies</p>
-                        <p onClick={()=> ClickHandler(4, 'settings')} className={tab === 4 ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Configuration</p>
+                        <p onClick={()=> ClickHandler('dashboard')} className={tab === 'dashboard' ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Share Info</p>
+                        <p onClick={()=> ClickHandler('members')} className={tab === 'members' ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Reg Members</p>
+                        <p onClick={()=> ClickHandler('attendance')} className={tab === 'attendance' ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Data Mangement</p>
+                        <p onClick={()=> ClickHandler('testimony')} className={tab === 'testimony' ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Testimonies</p>
+                        <p onClick={()=> ClickHandler('settings')} className={tab === 'settings' ? 'text-active bg-white px-3 py-2 rounded-md mx-6 font-Poppins-Bold cursor-pointer' : 'text-white mx-4 cursor-pointer'} >Configuration</p>
                     </div>
                     <p style={{backgroundColor: '#0C8F3B'}} className='text-white px-2 py-1 rounded-md text-xs font-Poppins-Regular cursor-pointer'>New</p>
                     <svg className='ml-8 cursor-pointer' width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">

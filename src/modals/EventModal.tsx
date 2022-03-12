@@ -6,7 +6,7 @@ import * as axios from 'axios'
 import { motion } from 'framer-motion'
 import * as yup from 'yup'
 import { useFormik } from 'formik'; 
-import { MuiPickersUtilsProvider, DatePicker, TimePicker, KeyboardTimePicker } from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, DatePicker, KeyboardTimePicker } from '@material-ui/pickers'
 import { Grid } from '@chakra-ui/layout'
 
 export default function EventModal(props: any) { 
@@ -28,10 +28,7 @@ export default function EventModal(props: any) {
         initialValues: {title: '', description: ''},
         validationSchema: loginSchema,
         onSubmit: () => {},
-    });  
- 
-
-    console.log(startDate.toLocaleDateString()) 
+    });   
 
     const submit = async () => {
 
@@ -45,17 +42,10 @@ export default function EventModal(props: any) {
         }else if (intialstartDate === '') {
             alert('You have to set a Date and Time to continue'); 
         }else {
-            try {
-
-                //     curl --location --request POST 'https://rccg-web-api.herokuapp.com//events' \
-                // --form 'title="this is the title"' \
-                // --form 'description="this is the description"' \
-                // --form 'date="this is the date"' \
-                // --form 'time="this is the time"' \
-                // --form 'image=@"/C:/Users/USER/Downloads/olokun store/Capture.PNG"'
+            try { 
 
                 let formData = new FormData()   
-                formData.append('name', formik.values.title) 
+                formData.append('title', formik.values.title) 
                 formData.append('description', formik.values.description) 
                 formData.append('date', startDate.toJSON()) 
                 formData.append('time', startDate.toJSON()) 
@@ -72,12 +62,10 @@ export default function EventModal(props: any) {
     
             console.log('Status '+request.status)
     
-            if (request.status === 201) {    
+            if (request.status === 200) {    
                 // console.log(json)  
                 const t1 = setTimeout(() => { 
-                    // setShowModal(false)
-                    // props.next(4)
-                    // Router.reload()
+                    props.close(false)
                     clearTimeout(t1);
                 }, 1000); 
             }else {
@@ -260,9 +248,50 @@ export default function EventModal(props: any) {
                     </div>
                 </label>
                 <div className='w-full flex' >
-                    <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                    <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
                         {loading ?
-                            'Loading'
+                            <>
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 200 200"
+                                    color="#FFF"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className='mr-4'>
+                                    <defs>
+                                        <linearGradient id="spinner-secondHalf">
+                                        <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                        </linearGradient>
+                                        <linearGradient id="spinner-firstHalf">
+                                        <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <g stroke-width="8">
+                                        <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                        <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                                    
+                                        <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        d="M 4 100 A 96 96 0 0 1 4 98"
+                                        />
+                                    </g>
+
+                                    <animateTransform
+                                        from="0 0 0"
+                                        to="360 0 0"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        repeatCount="indefinite"
+                                        dur="1300ms"
+                                    />
+                                </svg>
+                                Loading
+                            </>
                         :
                             'Upload Event'}
                     </button>
