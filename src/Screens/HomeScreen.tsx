@@ -4,12 +4,21 @@ import DevotionComponent from '../components/HomeComponents/DevotionComponent';
 import EventComponent from '../components/HomeComponents/EventComponent';
 import QuoteComponent from '../components/HomeComponents/QuoteComponent';
 
+import { useNavigate } from 'react-router-dom'
+
 export default function HomeScreen(props: any) {
 
     const [tab, setTab] = React.useState('0')
+    const navigate = useNavigate()
     React.useEffect(() => {
         props.hide(false)
-    }, [props]) 
+    }, [props])  
+
+    React.useEffect(() => {    
+        if(!sessionStorage.getItem('token')){
+            navigate('/')
+        }
+    },[]);  
 
     React.useEffect(() => {
         if(!localStorage.getItem('tabscreen')){
@@ -19,14 +28,12 @@ export default function HomeScreen(props: any) {
         }
         localStorage.setItem('tabscreen', tab+'')
         setTab(localStorage.getItem('tabscreen')+'')
-    })
+    },[tab])
 
     const ClickHandler =(item: any)=> {
         setTab(item)
         localStorage.setItem('tabscreen', tab+'')
-    }
-
-    console.log(localStorage.getItem('tabscreen')+'')
+    } 
 
     return (
         <div className='w-full h-full px-6 bg-white' >

@@ -2,6 +2,7 @@ import { Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Flag from '../assets/images/flag.png' 
+import { useNavigate } from 'react-router-dom'
 
 const Information = [
     {
@@ -53,6 +54,14 @@ export default function RegistaredMembersScreen() {
             res.json()
         )
     ) 
+    
+    const navigate = useNavigate()
+     
+    React.useEffect(() => {    
+        if(!sessionStorage.getItem('token')){
+            navigate('/')
+        }
+    },[]);   
 
     return(
         <div className='w-full px-8  ' >
@@ -136,4 +145,5 @@ export default function RegistaredMembersScreen() {
             </div>
         </div>
     )
-}
+} 
+

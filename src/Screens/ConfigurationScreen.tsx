@@ -1,7 +1,16 @@
 import { Input } from '@chakra-ui/input';
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 
 export default function ConfigurationScreen() {
+    const navigate = useNavigate() 
+
+    React.useEffect(() => {    
+        if(!sessionStorage.getItem('token')){
+            navigate('/')
+        }
+    },[]);  
+
     return(
         <div className='w-full px-8  ' >
             <div className='w-full flex items-center' >

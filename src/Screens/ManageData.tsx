@@ -2,49 +2,7 @@ import { Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Flag from '../assets/images/flag.png'
-
-const Information = [
-    {
-        church: 'The Vine Parish',
-        country: 'Nigeria', 
-        location: 'Port Harcourt, Rivers', 
-        male: '128',
-        female: '128',
-        children: '128',
-        date: '12, Jun 2021', 
-        mode: 'Onsite'
-    },
-    {
-        church: 'The Vine Parish',
-        country: 'Nigeria', 
-        location: 'Port Harcourt, Rivers', 
-        male: '128',
-        female: '128',
-        children: '128',
-        date: '12, Jun 2021', 
-        mode: 'Onsite'
-    },
-    {
-        church: 'The Vine Parish',
-        country: 'Nigeria', 
-        location: 'Port Harcourt, Rivers', 
-        male: '128',
-        female: '128',
-        children: '128',
-        date: '12, Jun 2021', 
-        mode: 'Onsite'
-    },
-    {
-        church: 'The Vine Parish',
-        country: 'Nigeria', 
-        location: 'Port Harcourt, Rivers', 
-        male: '128',
-        female: '128',
-        children: '128',
-        date: '12, Jun 2021', 
-        mode: 'Onsite'
-    },
-] 
+import { useNavigate } from 'react-router-dom'
 
 export default function ManageData() {
 
@@ -58,6 +16,14 @@ export default function ManageData() {
             res.json()
         )
     )
+ 
+    const navigate = useNavigate() 
+
+    React.useEffect(() => {    
+        if(!sessionStorage.getItem('token')){
+            navigate('/')
+        }
+    },[]);    
 
     console.log(data)
 

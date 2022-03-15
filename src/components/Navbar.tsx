@@ -21,7 +21,7 @@ export default function Navbar(props: any) {
             return
         }
         setTab(localStorage.getItem('navbar')+'')
-    },)
+    },[])
 
 
     React.useEffect(() => { 

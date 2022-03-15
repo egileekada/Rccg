@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import TestimonyModal from '../modals/TestimonyModal';
 
 export default function TestimonyScreen() {
@@ -16,7 +17,14 @@ export default function TestimonyScreen() {
         )
     ) 
 
-    console.log(data) 
+    const navigate = useNavigate()
+
+    React.useEffect(() => {    
+        if(!sessionStorage.getItem('token')){
+            navigate('/')
+        }
+    },[]);  
+
     const [value, setValue] = React.useState({} as any)
 
     const DateFormat =(item: any)=>{ 
