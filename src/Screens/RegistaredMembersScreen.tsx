@@ -55,6 +55,8 @@ export default function RegistaredMembersScreen() {
         )
     ) 
     
+    console.log(data)
+
     const navigate = useNavigate()
      
     React.useEffect(() => {    
@@ -134,7 +136,7 @@ export default function RegistaredMembersScreen() {
                                         <Td>{item.fullName}</Td>
                                         <Td>{item.phone}</Td>
                                         <Td>{item.email}</Td>
-                                        <Td>{item.church}</Td> 
+                                        <Td>{item.parish}</Td> 
                                         <Td className='flex items-center' ><img src={Flag} className='rounded-full mr-3' alt='nig' />{item.location}</Td> 
                                     </Tr> 
                                 )

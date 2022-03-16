@@ -35,7 +35,7 @@ export default function TestimonyModal(props: any) {
                         <p style={{color: '#727272'}} className='font-Poppins-Regular' >NAME</p>
                         <p className='font-Poppins-Regular mt-2 text-sm' >{props.value.fullName}</p>
                         <p style={{color: '#727272'}} className='font-Poppins-Regular mt-4' >PARISH NAME</p>
-                        <p className='font-Poppins-Regular mt-2 text-sm' >Bibendum fusce eros commodo, ornare mattis ultrices. </p>
+                        <p className='font-Poppins-Regular mt-2 text-sm' >{props.value.parishName}Praise Land</p>
                     </div>
                     <div className='w-full ml-2' > 
                         <p style={{color: '#727272'}} className='font-Poppins-Regular' >PHONE</p>
