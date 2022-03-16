@@ -16,9 +16,7 @@ export default function DevotionComponent() {
         }).then(res =>
             res.json()
         )
-    )
-
-    console.log(data)
+    ) 
 
     const DateFormat =(item: any)=>{ 
         var date = new Date(item);

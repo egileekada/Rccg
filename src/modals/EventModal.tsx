@@ -56,11 +56,7 @@ export default function EventModal(props: any) {
                     headers: { 'content-type': 'application/json',
                     Authorization : `Bearer ${localStorage.getItem('token')}` 
                     }
-                })   
-    
-            // const json = await request.json();
-    
-            console.log('Status '+request.status)
+                })    
     
             if (request.status === 200) {    
                 // console.log(json)  

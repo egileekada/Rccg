@@ -38,10 +38,6 @@ export default function QuoteModal(props: any) {
                     }
                 })   
     
-            // const json = await request.json();
-    
-            console.log('Status '+request.status)
-    
             if (request.status === 200) {    
                 // console.log(json)  
                 const t1 = setTimeout(() => { 

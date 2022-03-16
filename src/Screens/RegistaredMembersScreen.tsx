@@ -53,9 +53,7 @@ export default function RegistaredMembersScreen() {
         }).then(res =>
             res.json()
         )
-    ) 
-    
-    console.log(data)
+    )  
 
     const navigate = useNavigate()
      
