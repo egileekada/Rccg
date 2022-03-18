@@ -25,41 +25,12 @@ export default function AnnouncementModal(props: any) {
     const submit = async () => {
 
         setLoading(true)
-        if (!formik.dirty) {
-          alert('You have to fill in th form to continue'); 
-        }else if (!formik.isValid) {
-          alert('You have to fill in the form correctly to continue'); 
-        } else {
-            try { 
-
-                // make request to server
-                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/announcements`, formik.values, {
-                        headers: { 'content-type': 'application/json',
-                        Authorization : `Bearer ${localStorage.getItem('token')}` 
-                    }
-                })   
-    
-            // const json = await request.json();
-    
-            console.log('Status '+request.status)
-    
-            if (request.status === 200) {    
-                // console.log(json)  
-                const t1 = setTimeout(() => { 
-                    props.close(false)
-                    navigate(0)
-                    clearTimeout(t1);
-                }, 1000); 
-            }else {
-                // alert(json.message);
-                // console.log(json)
-                // setLoading(false);
-            }
-                    
-            } catch (error) {
-                console.log(error)
-            } 
-        }
+       
+        {props.value.name === undefined?
+                NewEvent()
+            :
+                EditEvent()
+        }  
         // setLoading(false)
     } 
  
@@ -126,8 +97,8 @@ export default function AnnouncementModal(props: any) {
     }
 
     React.useEffect(() => {
-      formik.setFieldValue('title', props.value.title)
-      formik.setFieldValue('description', props.value.description) 
+      formik.setFieldValue('name', props.value.name)
+      formik.setFieldValue('announcement', props.value.announcement) 
     }, []) 
 
     return (
@@ -148,7 +119,8 @@ export default function AnnouncementModal(props: any) {
                     onFocus={() =>
                         formik.setFieldTouched("announcement", true, true)
                     }  
-                    size='lg' placeholder='Write announcement' fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
+                    _placeholder={props.value.announcement === undefined ? {color: 'gray.500' } : {color: 'black' } } 
+                    size='lg' placeholder={props.value.announcement === undefined? 'Write announcement': props.value.announcement} fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
                 <div className="w-full h-auto pt-2">
                     {formik.touched.announcement && formik.errors.announcement && (
                         <motion.p
@@ -167,7 +139,8 @@ export default function AnnouncementModal(props: any) {
                     onFocus={() =>
                         formik.setFieldTouched("name", true, true)
                     }  
-                    size='lg' fontSize='sm' placeholder='Your name' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
+                    _placeholder={props.value.name === undefined ? {color: 'gray.500' } : {color: 'black' } } 
+                    size='lg' fontSize='sm' placeholder={props.value.name === undefined? 'Your name': props.value.name} backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
                 <div className="w-full h-auto pt-2">
                     {formik.touched.name && formik.errors.name && (
                         <motion.p
