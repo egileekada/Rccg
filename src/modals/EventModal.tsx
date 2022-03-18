@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'; 
 import { MuiPickersUtilsProvider, DatePicker, KeyboardTimePicker } from '@material-ui/pickers'
 import { Grid } from '@chakra-ui/layout'
+import { useNavigate } from 'react-router-dom'
 
 export default function EventModal(props: any) { 
 
@@ -18,25 +19,37 @@ export default function EventModal(props: any) {
     const [image, SetImage] = React.useState('');
     const [intialstartDate, setIntialStartDate] = React.useState(''); 
     const [imageFile, SetImageFile] = React.useState({} as any);   
+    const navigate = useNavigate()
  
     const loginSchema = yup.object({  
         title: yup.string().required('Required'),   
         description: yup.string().required('Required'), 
     }) 
  
+    console.log(props.value)
+
     const formik = useFormik({
         initialValues: {title: '', description: ''},
         validationSchema: loginSchema,
         onSubmit: () => {},
     });   
 
-    const submit = async () => {
+    const submit =() => {
 
-        setLoading(true)
+        setLoading(true) 
+        {props.value.title === undefined?
+                NewEvent()
+            :
+                EditEvent()
+        }  
+    } 
+ 
+    const NewEvent = async ()=> {
+
         if (!formik.dirty) {
-          alert('You have to fill in th form to continue'); 
+            alert('You have to fill in th form to continue'); 
         }else if (!formik.isValid) {
-          alert('You have to fill in the form correctly to continue'); 
+            alert('You have to fill in the form correctly to continue'); 
         }else if (image === '') {
             alert('You have to Add an Image to continue'); 
         }else if (intialstartDate === '') {
@@ -50,18 +63,19 @@ export default function EventModal(props: any) {
                 formData.append('date', startDate.toJSON()) 
                 formData.append('time', startDate.toJSON()) 
                 formData.append('image', imageFile)  
-    
-                // make request to server
-                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/events`, formData, {
-                    headers: { 'content-type': 'application/json',
-                    Authorization : `Bearer ${localStorage.getItem('token')}` 
-                    }
-                })    
-    
+
+                // make request to server 
+                    const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/events`, formData, {
+                        headers: { 'content-type': 'application/json',
+                        Authorization : `Bearer ${localStorage.getItem('token')}` 
+                        }
+                    })    
+
             if (request.status === 200) {    
                 // console.log(json)  
                 const t1 = setTimeout(() => { 
                     props.close(false)
+                    navigate(0)
                     clearTimeout(t1);
                 }, 1000); 
             }else {
@@ -74,8 +88,57 @@ export default function EventModal(props: any) {
                 console.log(error)
             } 
         }
-        setLoading(false)
     } 
+
+    const EditEvent = async ()=> { 
+
+        try { 
+
+            let formData = new FormData()   
+            formData.append('title', formik.values.title) 
+            formData.append('description', formik.values.description) 
+            if (image !== '') {
+                formData.append('image', imageFile)  
+            }else {
+                formData.append('imageURL', props.value.imageURL)  
+            }  
+            if (intialstartDate === '') {
+                formData.append('date', props.value.date) 
+                formData.append('time', props.value.date) 
+            }else {
+                formData.append('date', startDate.toJSON()) 
+                formData.append('time', startDate.toJSON())  
+            }  
+            // make request to server 
+                const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/events/${props.value._id}`, formData, {
+                    headers: { 'content-type': 'application/json',
+                    Authorization : `Bearer ${localStorage.getItem('token')}` 
+                    }
+                })    
+
+        if (request.status === 200) {    
+            // console.log(json)  
+            const t1 = setTimeout(() => { 
+                props.close(false)
+                navigate(0)
+                clearTimeout(t1);
+            }, 1000); 
+        }else {
+            // alert(json.message);
+            // console.log(json)
+            // setLoading(false);
+        }
+                
+        } catch (error) {
+            console.log(error)
+        }  
+    }
+
+    React.useEffect(() => {
+      formik.setFieldValue('title', props.value.title)
+      formik.setFieldValue('description', props.value.description)
+      setStartDate(props.value.date)
+    }, []) 
 
     const handleImageChange = (e: any ) => {
 
@@ -139,13 +202,14 @@ export default function EventModal(props: any) {
             </div>
             <div style={{width: '480px'}} className='mx-auto my-8' >
                 <p className=' font-Poppins-Regular text-sm mb-2' >Event Title</p>
-                <Input 
+                <Input  
                     name="title"
                     onChange={formik.handleChange}
                     onFocus={() =>
                         formik.setFieldTouched("title", true, true)
-                    }  
-                    size='lg' fontSize='sm' placeholder='Event Title' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
+                    }    
+                    _placeholder={props.value.title === undefined ? {color: 'gray.500' } : {color: 'black' } } 
+                    size='lg' fontSize='sm' placeholder={props.value.title === undefined? 'Event Title': props.value.title} backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
                 <div className="w-full h-auto pt-2">
                     {formik.touched.title && formik.errors.title && (
                         <motion.p
@@ -161,10 +225,11 @@ export default function EventModal(props: any) {
                 <Textarea 
                     name="description"
                     onChange={formik.handleChange}
+                    _placeholder={props.value.title === undefined ? {color: 'gray.500' } : {color: 'black' } }
                     onFocus={() =>
                         formik.setFieldTouched("description", true, true)
                     }  
-                    size='lg' placeholder='Description' fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
+                    size='lg' placeholder={props.value.title === undefined? 'Description': props.value.description} fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
                 <div className="w-full h-auto pt-2">
                     {formik.touched.description && formik.errors.description && (
                         <motion.p
@@ -230,67 +295,77 @@ export default function EventModal(props: any) {
                     <input style={{display:'none'}} type="file" accept="image/*" id="input" onChange={handleImageChange} />
                     <div className='w-full cursor-pointer mt-4 ' >
                         {image === '' ?
-                            <div className='w-full flex items-center px-12 rounded-lg h-20' style={{backgroundColor: '#F4F4F4'}} >
-                                <div className='w-12 h-12 flex justify-center items-center bg-white rounded-full' >
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.3338 0C17.7231 0 20 2.37811 20 5.91672V14.0833C20 17.6219 17.7231 20 14.3328 20H5.66618C2.2769 20 0 17.6219 0 14.0833V5.91672C0 2.37811 2.2769 0 5.66618 0H14.3338ZM15.4366 10.5501C14.3646 9.88132 13.5371 10.8204 13.3138 11.1207C13.0986 11.4107 12.9136 11.7307 12.7185 12.0506C12.2419 12.84 11.6958 13.7503 10.7506 14.2797C9.37699 15.0403 8.3342 14.3395 7.58404 13.8297C7.30248 13.6398 7.02897 13.4603 6.75645 13.3406C6.08473 13.0506 5.48038 13.3808 4.5834 14.5201C4.11279 15.1156 3.64621 15.7059 3.17358 16.2941C2.89102 16.646 2.95839 17.1889 3.3395 17.4242C3.94788 17.7988 4.68999 18 5.52865 18H13.9564C14.432 18 14.9087 17.935 15.3632 17.7864C16.3869 17.452 17.1994 16.6863 17.6237 15.6749C17.9817 14.8246 18.1557 13.7926 17.8208 12.934C17.7092 12.6491 17.5423 12.3839 17.308 12.1507C16.6936 11.5408 16.1194 10.9711 15.4366 10.5501ZM6.49886 4C5.12021 4 4 5.12173 4 6.5C4 7.87827 5.12021 9 6.49886 9C7.8765 9 8.99772 7.87827 8.99772 6.5C8.99772 5.12173 7.8765 4 6.49886 4Z" fill="#28166F"/>
-                                    </svg> 
-                                </div> 
-                                    <p className=' font-Poppins-Regular text-sm ml-4' >Upload Image</p>
-                            </div>
+                            <>
+                                {props.value.title === undefined ?
+                                        <div className='w-full flex items-center px-12 rounded-lg h-20' style={{backgroundColor: '#F4F4F4'}} >
+                                            <div className='w-12 h-12 flex justify-center items-center bg-white rounded-full' >
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M14.3338 0C17.7231 0 20 2.37811 20 5.91672V14.0833C20 17.6219 17.7231 20 14.3328 20H5.66618C2.2769 20 0 17.6219 0 14.0833V5.91672C0 2.37811 2.2769 0 5.66618 0H14.3338ZM15.4366 10.5501C14.3646 9.88132 13.5371 10.8204 13.3138 11.1207C13.0986 11.4107 12.9136 11.7307 12.7185 12.0506C12.2419 12.84 11.6958 13.7503 10.7506 14.2797C9.37699 15.0403 8.3342 14.3395 7.58404 13.8297C7.30248 13.6398 7.02897 13.4603 6.75645 13.3406C6.08473 13.0506 5.48038 13.3808 4.5834 14.5201C4.11279 15.1156 3.64621 15.7059 3.17358 16.2941C2.89102 16.646 2.95839 17.1889 3.3395 17.4242C3.94788 17.7988 4.68999 18 5.52865 18H13.9564C14.432 18 14.9087 17.935 15.3632 17.7864C16.3869 17.452 17.1994 16.6863 17.6237 15.6749C17.9817 14.8246 18.1557 13.7926 17.8208 12.934C17.7092 12.6491 17.5423 12.3839 17.308 12.1507C16.6936 11.5408 16.1194 10.9711 15.4366 10.5501ZM6.49886 4C5.12021 4 4 5.12173 4 6.5C4 7.87827 5.12021 9 6.49886 9C7.8765 9 8.99772 7.87827 8.99772 6.5C8.99772 5.12173 7.8765 4 6.49886 4Z" fill="#28166F"/>
+                                                </svg> 
+                                            </div> 
+                                                <p className=' font-Poppins-Regular text-sm ml-4' >Upload Image</p>
+                                        </div>
+                                    :
+                                        <img style={{borderRadius: '8px'}} alt='upload' src={props.value.imageURL} className='w-full h-20 object-cover' /> 
+                                    }
+                            </>
                         :
-                            <img style={{borderRadius: '8px'}} src={image} className='w-full h-20 object-cover' /> 
+                            <img style={{borderRadius: '8px'}} alt='upload' src={image} className='w-full h-20 object-cover' /> 
                         }
                     </div>
                 </label>
                 <div className='w-full flex' >
-                    <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
-                        {loading ?
-                            <>
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 200 200"
-                                    color="#FFF"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className='mr-4'>
-                                    <defs>
-                                        <linearGradient id="spinner-secondHalf">
-                                        <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                        <linearGradient id="spinner-firstHalf">
-                                        <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                    </defs>
+                    {loading ?
+                        <button style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            
+                                <>
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 200 200"
+                                        color="#FFF"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className='mr-4'>
+                                        <defs>
+                                            <linearGradient id="spinner-secondHalf">
+                                            <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                            <linearGradient id="spinner-firstHalf">
+                                            <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                        </defs>
 
-                                    <g stroke-width="8">
-                                        <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
-                                        <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
-                                    
-                                        <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        d="M 4 100 A 96 96 0 0 1 4 98"
+                                        <g stroke-width="8">
+                                            <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                            <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                                        
+                                            <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            d="M 4 100 A 96 96 0 0 1 4 98"
+                                            />
+                                        </g>
+
+                                        <animateTransform
+                                            from="0 0 0"
+                                            to="360 0 0"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            repeatCount="indefinite"
+                                            dur="1300ms"
                                         />
-                                    </g>
-
-                                    <animateTransform
-                                        from="0 0 0"
-                                        to="360 0 0"
-                                        attributeName="transform"
-                                        type="rotate"
-                                        repeatCount="indefinite"
-                                        dur="1300ms"
-                                    />
-                                </svg>
-                                Loading
-                            </>
-                        :
-                            'Upload Event'}
-                    </button>
+                                    </svg>
+                                    Loading
+                                </> 
+                        </button>
+                    :
+                        <button onDoubleClick={()=> false} onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            Upload Event
+                        </button>
+                    }
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import React from 'react'
 import * as yup from 'yup'
 import * as axios from 'axios'   
 import { useFormik } from 'formik'; 
+import { useNavigate } from 'react-router-dom'
 
 export default function DevotionModal(props: any) { 
   
@@ -13,16 +14,12 @@ export default function DevotionModal(props: any) {
     const presentDate = new Date()
     const [loading, setLoading] = React.useState(false);
     const [start, setStart] = React.useState(false);
+    const navigate = useNavigate()
     const [intialstartDate, setIntialStartDate] = React.useState(''); 
     
     const loginSchema = yup.object({     
         description: yup.string().required('Required'), 
-    }) 
-
-    // {
-    //     "description":"This is the description",
-    //     "date":"234344453454"
-    // }
+    })  
  
     const formik = useFormik({
         initialValues: {description: ''},
@@ -38,6 +35,12 @@ export default function DevotionModal(props: any) {
             <p className=' font-Montserrat-Medium text-xs' >{string.substr(4, 11)}</p>
         )
     }
+
+
+    React.useEffect(() => { 
+        formik.setFieldValue('description', props.value.description)
+        setStartDate(props.value.date)
+      }, []) 
 
     const handleStartChange = (date: any) => { 
         setStartDate(date);
@@ -60,11 +63,23 @@ export default function DevotionModal(props: any) {
     const submit = async () => {
 
         setLoading(true)
+        {props.value.description === undefined?
+                NewEvent()
+            :
+                EditEvent()
+        } 
+    } 
+
+
+    const NewEvent = async ()=> {
+
         if (!formik.dirty) {
-          alert('You have to fill in th form to continue'); 
+            alert('You have to fill in th form to continue'); 
         }else if (!formik.isValid) {
-          alert('You have to fill in the form correctly to continue'); 
-        } else {
+            alert('You have to fill in the form correctly to continue'); 
+        }else if (intialstartDate === '') {
+            alert('You have to set a Date and Time to continue'); 
+        }else {
             try { 
 
                 // make request to server
@@ -80,7 +95,8 @@ export default function DevotionModal(props: any) {
             if (request.status === 200) {    
                 // console.log(json)  
                 const t1 = setTimeout(() => { 
-                    props.close(false)
+                    // props.close(false)
+                    navigate(0)
                     clearTimeout(t1);
                 }, 1000); 
             }else {
@@ -93,8 +109,45 @@ export default function DevotionModal(props: any) {
                 console.log(error)
             } 
         }
-        setLoading(false)
     } 
+
+    const EditEvent = async ()=> { 
+
+        try { 
+
+            let Newdate: any
+            if (intialstartDate === '') {
+                Newdate = props.value.date 
+            }else {
+                Newdate = startDate.toJSON() 
+            }  
+            //
+            const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/devotions/${props.value._id}`, {
+                description: formik.values.description,
+                date: Newdate
+            }, {
+                    headers: { 'content-type': 'application/json',
+                    Authorization : `Bearer ${localStorage.getItem('token')}` 
+                }
+            })    
+
+        if (request.status === 200) {    
+            // console.log(json)  
+            const t1 = setTimeout(() => { 
+                // props.close(false)
+                navigate(0)
+                clearTimeout(t1);
+            }, 1000); 
+        }else {
+            // alert(json.message);
+            // console.log(json)
+            // setLoading(false);
+        }
+                
+        } catch (error) {
+            console.log(error)
+        } 
+    }
 
     return (
         <div className='bg-white pb-20' style={{width: '900px'}} >
@@ -113,11 +166,12 @@ export default function DevotionModal(props: any) {
                 <p className=' font-Poppins-Regular text-sm mt-4 mb-2' >Description</p>
                 <Textarea 
                     name="description"
-                    onChange={formik.handleChange}
+                    onChange={formik.handleChange}    
+                    _placeholder={props.value.description === undefined ? {color: 'gray.500' } : {color: 'black' } } 
                     onFocus={() =>
                         formik.setFieldTouched("description", true, true)
                     }  
-                    size='lg' placeholder='Description' fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
+                    size='lg' placeholder={props.value.description === undefined? 'Description': props.value.description} fontSize='sm' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' /> 
                 <div className="w-full h-auto pt-2">
                     {formik.touched.description && formik.errors.description && (
                         <motion.p
@@ -147,55 +201,58 @@ export default function DevotionModal(props: any) {
                 </MuiPickersUtilsProvider> 
                     </div> 
                 </div> 
-                <div className='w-full flex' >
+                <div className='w-full flex' > 
+                    {loading ?
+                        <button style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            
+                                <>
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 200 200"
+                                        color="#FFF"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className='mr-4'>
+                                        <defs>
+                                            <linearGradient id="spinner-secondHalf">
+                                            <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                            <linearGradient id="spinner-firstHalf">
+                                            <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                        </defs>
 
-                <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
-                        {loading ?
-                            <>
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 200 200"
-                                    color="#FFF"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className='mr-4'>
-                                    <defs>
-                                        <linearGradient id="spinner-secondHalf">
-                                        <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                        <linearGradient id="spinner-firstHalf">
-                                        <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                    </defs>
+                                        <g stroke-width="8">
+                                            <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                            <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                                        
+                                            <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            d="M 4 100 A 96 96 0 0 1 4 98"
+                                            />
+                                        </g>
 
-                                    <g stroke-width="8">
-                                        <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
-                                        <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
-                                    
-                                        <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        d="M 4 100 A 96 96 0 0 1 4 98"
+                                        <animateTransform
+                                            from="0 0 0"
+                                            to="360 0 0"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            repeatCount="indefinite"
+                                            dur="1300ms"
                                         />
-                                    </g>
-
-                                    <animateTransform
-                                        from="0 0 0"
-                                        to="360 0 0"
-                                        attributeName="transform"
-                                        type="rotate"
-                                        repeatCount="indefinite"
-                                        dur="1300ms"
-                                    />
-                                </svg>
-                                Loading
-                            </>
-                        :
-                            'Upload Devotion'}
-                    </button>
+                                    </svg>
+                                    Loading
+                                </> 
+                        </button>
+                    :
+                        <button onDoubleClick={()=> false} onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            Upload Devotion
+                        </button>
+                    }
                     {/* <button style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >Upload Devotion</button> */}
                 </div>
             </div>

@@ -28,7 +28,7 @@ function App() {
     <>
       <ChakraProvider>
         <Router> 
-        <div className='w-full h-40' >
+        <div className='w-full h-40 z-50 relative' >
           <Navbar hide={hide} />
         </div>  
           <ScrollToTop />

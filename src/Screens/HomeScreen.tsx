@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function HomeScreen(props: any) {
 
-    const [tab, setTab] = React.useState('0')
+    const [tab, setTab] = React.useState('0') 
     const navigate = useNavigate()
     React.useEffect(() => {
         props.hide(false)
@@ -18,21 +18,35 @@ export default function HomeScreen(props: any) {
         if(!sessionStorage.getItem('token')){
             navigate('/')
         }
-    },[]);  
 
-    React.useEffect(() => {
+        if(localStorage.getItem('tabscreen')+'' === '0'){
+            setTab('0')
+        } else if(localStorage.getItem('tabscreen')+'' === '1'){
+            setTab('1')
+        } else if(localStorage.getItem('tabscreen')+'' === '2'){
+            setTab('2')
+        } else if(localStorage.getItem('tabscreen')+'' === '3'){
+            setTab('3')
+        }  
+    },[navigate]);  
+
+    React.useEffect(() => { 
         if(!localStorage.getItem('tabscreen')){
             setTab('0')
             localStorage.setItem('tabscreen', '0')
             return
-        }
-        localStorage.setItem('tabscreen', tab+'')
+        } 
         setTab(localStorage.getItem('tabscreen')+'')
+        // localStorage.setItem('tabscreen', tab)
+    },[])
+
+    React.useEffect(() => { 
+        localStorage.setItem('tabscreen', tab+'')
     },[tab])
 
     const ClickHandler =(item: any)=> {
         setTab(item)
-        localStorage.setItem('tabscreen', tab+'')
+        localStorage.setItem('tabscreen', item+'')
     } 
 
     return (
