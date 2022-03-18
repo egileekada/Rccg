@@ -5,10 +5,12 @@ import { useFormik } from 'formik';
 import { Input } from '@chakra-ui/input';
 import { Textarea } from '@chakra-ui/react';
 import * as axios from 'axios'   
+import { useNavigate } from 'react-router-dom';
 
 export default function AnnouncementModal(props: any) {
 
     const [loading, setLoading] = React.useState(false);
+    const navigate = useNavigate()
     const loginSchema = yup.object({  
         name: yup.string().required('Required'),   
         announcement: yup.string().required('Required'), 
@@ -18,9 +20,7 @@ export default function AnnouncementModal(props: any) {
         initialValues: {name: '', announcement: ''},
         validationSchema: loginSchema,
         onSubmit: () => {},
-    }); 
-
-    console.log(localStorage.getItem('token')+'')
+    });  
     
     const submit = async () => {
 
@@ -47,6 +47,7 @@ export default function AnnouncementModal(props: any) {
                 // console.log(json)  
                 const t1 = setTimeout(() => { 
                     props.close(false)
+                    navigate(0)
                     clearTimeout(t1);
                 }, 1000); 
             }else {
@@ -59,8 +60,75 @@ export default function AnnouncementModal(props: any) {
                 console.log(error)
             } 
         }
-        setLoading(false)
+        // setLoading(false)
     } 
+ 
+    const NewEvent = async ()=> {
+
+        if (!formik.dirty) {
+            alert('You have to fill in th form to continue'); 
+        }else if (!formik.isValid) {
+            alert('You have to fill in the form correctly to continue'); 
+        } else {
+            try { 
+
+                // make request to server
+                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/announcements`, formik.values, {
+                        headers: { 'content-type': 'application/json',
+                        Authorization : `Bearer ${localStorage.getItem('token')}` 
+                    }
+                })     
+    
+                if (request.status === 200) {    
+                    // console.log(json)  
+                    const t1 = setTimeout(() => { 
+                        props.close(false)
+                        navigate(0)
+                        clearTimeout(t1);
+                    }, 1000); 
+                }else {
+                    // alert(json.message);
+                    // console.log(json)
+                    // setLoading(false);
+                } 
+            } catch (error) {
+                console.log(error)
+            } 
+        }
+    } 
+
+    const EditEvent = async ()=> {  
+        
+        try { 
+
+            // make request to server
+            const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/announcements/${props.value._id}`, formik.values, {
+                    headers: { 'content-type': 'application/json',
+                    Authorization : `Bearer ${localStorage.getItem('token')}` 
+                }
+            })     
+
+            if (request.status === 200) {    
+                // console.log(json)  
+                const t1 = setTimeout(() => { 
+                    props.close(false)
+                    navigate(0)
+                    clearTimeout(t1);
+                }, 1000); 
+            }else {
+                // alert(json.message);
+                // console.log(json)
+                // setLoading(false);
+            } 
+        } catch (error) {
+            console.log(error)
+        } 
+    }
+
+    React.useEffect(() => {
+      formik.setFieldValue('title', props.value.title)
+      formik.setFieldValue('description', props.value.description) 
+    }, []) 
 
     return (
         <div className='bg-white pb-20' style={{width: '900px'}} >
@@ -112,59 +180,57 @@ export default function AnnouncementModal(props: any) {
                     )}
                 </div> 
                 <div className='w-full flex' > 
-                    <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
-                        {loading ?
-                            <>
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 200 200"
-                                    color="#FFF"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className='mr-4'>
-                                    <defs>
-                                        <linearGradient id="spinner-secondHalf">
-                                        <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                        <linearGradient id="spinner-firstHalf">
-                                        <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
-                                        <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
-                                        </linearGradient>
-                                    </defs>
+                    {loading ?
+                        <button style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            
+                                <>
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 200 200"
+                                        color="#FFF"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className='mr-4'>
+                                        <defs>
+                                            <linearGradient id="spinner-secondHalf">
+                                            <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                            <linearGradient id="spinner-firstHalf">
+                                            <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                                            </linearGradient>
+                                        </defs>
 
-                                    <g stroke-width="8">
-                                        <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
-                                        <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
-                                    
-                                        <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        d="M 4 100 A 96 96 0 0 1 4 98"
+                                        <g stroke-width="8">
+                                            <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                                            <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                                        
+                                            <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            d="M 4 100 A 96 96 0 0 1 4 98"
+                                            />
+                                        </g>
+
+                                        <animateTransform
+                                            from="0 0 0"
+                                            to="360 0 0"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            repeatCount="indefinite"
+                                            dur="1300ms"
                                         />
-                                    </g>
-
-                                    <animateTransform
-                                        from="0 0 0"
-                                        to="360 0 0"
-                                        attributeName="transform"
-                                        type="rotate"
-                                        repeatCount="indefinite"
-                                        dur="1300ms"
-                                    />
-                                </svg>
-                                Loading
-                            </>
-                        :
-                            'Upload Announcement'}
-                    </button>
-                    {/* <button onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
-                        {loading ?
-                            'Loading..'
-                        :
-                            'Upload Devotion'}
-                    </button> */}
+                                    </svg>
+                                    Loading
+                                </> 
+                        </button>
+                    :
+                        <button onDoubleClick={()=> false} onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                            Upload Announcement
+                        </button>
+                    }  
                     {/* <button style={{backgroundColor: '#28166F'}} className='rounded-md py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >Upload Devotion</button> */}
                 </div>
             </div>
