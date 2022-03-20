@@ -24,11 +24,20 @@ export default function QuoteModal(props: any) {
     
     const submit = async () => {
 
-        setLoading(true)
+        setLoading(true) 
+        {props.value.description === undefined?
+                NewEvent()
+            :
+                EditEvent()
+        }   
+    } 
+
+    const NewEvent = async ()=> {
+
         if (!formik.dirty) {
-          alert('You have to fill in th form to continue'); 
+            alert('You have to fill in th form to continue'); 
         }else if (!formik.isValid) {
-          alert('You have to fill in the form correctly to continue'); 
+            alert('You have to fill in the form correctly to continue'); 
         } else {
             try { 
 
@@ -56,7 +65,41 @@ export default function QuoteModal(props: any) {
                 console.log(error)
             } 
         } 
+        
     } 
+
+    const EditEvent = async ()=> { 
+
+        try { 
+    
+            // make request to server
+            const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/quotes/${props.value._id}`, formik.values, {
+                    headers: { 'content-type': 'application/json',
+                    Authorization : `Bearer ${localStorage.getItem('token')}` 
+                }
+            })   
+
+            if (request.status === 200) {    
+                // console.log(json)  
+                const t1 = setTimeout(() => { 
+                    props.close(false)
+                    navigate(0)
+                    clearTimeout(t1);
+                }, 1000); 
+            }else {
+                // alert(json.message);
+                // console.log(json)
+                // setLoading(false);
+            }
+                
+        } catch (error) {
+            console.log(error)
+        } 
+    }
+
+    React.useEffect(() => {
+      formik.setFieldValue('description', props.value.description) 
+    }, []) 
 
     const DateFormat =(item: any)=>{ 
         var date = new Date(item);

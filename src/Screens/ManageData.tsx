@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import Flag from '../assets/images/flag.png'
 import { useNavigate } from 'react-router-dom'
+import ReactCountryFlag from 'react-country-flag';
 
 export default function ManageData() {
 
@@ -102,8 +103,11 @@ export default function ManageData() {
                                     <Tr className='font-Poppins-Regular text-sm' key={item._id} > 
                                         <Td>{item.parishName}</Td>
                                         <Td >
-                                            <div className='flex items-center'>
-                                                <img src={Flag} className='rounded-full mr-3' alt='nig' />{item.country}
+                                            <div className='flex items-center'> 
+                                                <ReactCountryFlag style={{width: '32px', height: '32px'}}  className='rounded-full mr-3'
+                                                    svg
+                                                    cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                                                    cdnSuffix="svg" countryCode={item.countryCode} />{item.country}
                                             </div> 
                                         </Td> 
                                         <Td>{item.location}</Td>

@@ -8,6 +8,7 @@ export default function QuoteComponent() {
     const [show, setShow] = React.useState('')
     const [showModal, setShowModal] = React.useState(false)
     const [index, setIndex] = React.useState('')
+    const [value, setValue] = React.useState({} as any)
     
     const [deleteModal, setDeleteModal] = React.useState(false)
 
@@ -21,6 +22,8 @@ export default function QuoteComponent() {
             res.json()
         )
     ) 
+
+    console.log(data)
 
     const DeleteHandler =()=>{
         fetch(`https://rccg-web-api.herokuapp.com/quotes/${index}`, {
@@ -47,6 +50,15 @@ export default function QuoteComponent() {
         setIndex(id)
     }
 
+    const EditHandler =(data: any)=> {
+        setShowModal(true)
+        setValue(data)
+    }
+
+    const OpenModal =()=> {
+        setShowModal(true)
+        setValue({}as any)
+    }
 
     return(
         <div className='w-full pb-10' >
@@ -55,7 +67,7 @@ export default function QuoteComponent() {
                     <p style={{color: '#121212'}} className='font-Poppins-Bold text-2xl' >Manage C.O’s Quotes</p>
                     <p style={{color: '#727272'}} className='font-Poppins-Regular mt-1 text-sm' >Add and manage quotes</p>
                 </div>
-                <button onClick={()=> setShowModal(true)} style={{border:'1px solid #28166F'}} className='w-32 text-active text-sm py-3 ml-auto font-Poppins-Regular justify-center rounded-md flex items-center' >
+                <button onClick={()=> OpenModal()} style={{border:'1px solid #28166F'}} className='w-32 text-active text-sm py-3 ml-auto font-Poppins-Regular justify-center rounded-md flex items-center' >
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6V11.25M6 0.75V6V0.75ZM6 6H11.25H6ZM6 6H0.75H6Z" stroke="#28166F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -124,7 +136,7 @@ export default function QuoteComponent() {
                                 </div>
                                 {show === item._id ? 
                                     <div className='absolute top-8 right-4 bg-white w-24 p-3 rounded '>
-                                        <div className='flex items-center cursor-pointer' >
+                                        <div onClick={()=> EditHandler(item)} className='flex items-center cursor-pointer' >
                                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.6607 10.0561C10.9857 10.0561 11.25 10.3238 11.25 10.653C11.25 10.9829 10.9857 11.25 10.6607 11.25H7.32982C7.00484 11.25 6.74052 10.9829 6.74052 10.653C6.74052 10.3238 7.00484 10.0561 7.32982 10.0561H10.6607ZM8.35075 1.15779L9.21117 1.84129C9.56401 2.1172 9.79923 2.4809 9.8797 2.86341C9.97255 3.28417 9.87351 3.69741 9.59496 4.05484L4.46957 10.6829C4.23434 10.9839 3.8877 11.1532 3.51629 11.1595L1.47356 11.1846C1.36214 11.1846 1.26929 11.1093 1.24453 11.0027L0.780274 8.98986C0.699803 8.61989 0.780274 8.23738 1.0155 7.94266L4.64908 3.23965C4.71098 3.1644 4.8224 3.15249 4.89668 3.2083L6.42563 4.42481C6.52467 4.50633 6.66086 4.55022 6.80323 4.53141C7.10654 4.49379 7.31081 4.21788 7.27986 3.92315C7.26129 3.77266 7.18701 3.64724 7.08797 3.55318C7.05702 3.5281 5.60235 2.36176 5.60235 2.36176C5.5095 2.28651 5.49093 2.14855 5.56521 2.05512L6.14089 1.30828C6.67324 0.62478 7.60175 0.562073 8.35075 1.15779Z" fill="#28166F"/>
                                             </svg>
@@ -158,7 +170,7 @@ export default function QuoteComponent() {
                 (
                     <>
                         <div className="h-auto flex justify-center items-center overflow-x-hidden overflow-y-hidden fixed pb-4 px-4 inset-0 z-50 outline-none focus:outline-none"> 
-                            <QuoteModal close={setShowModal} />
+                            <QuoteModal value={value} close={setShowModal} />
                         </div> 
                         <div className="opacity-50 fixed flex flex-1 inset-0 z-40 bg-black"/>
                     </>

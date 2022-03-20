@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import Flag from '../assets/images/flag.png' 
 import { useNavigate } from 'react-router-dom'
+import ReactCountryFlag from 'react-country-flag';
 
 const Information = [
     {
@@ -135,12 +136,18 @@ export default function RegistaredMembersScreen() {
                                         <Td>{item.phone}</Td>
                                         <Td>{item.email}</Td>
                                         <Td>{item.parish}</Td> 
-                                        <Td className='flex items-center' ><img src={Flag} className='rounded-full mr-3' alt='nig' />{item.location}</Td> 
+                                        <Td className='flex items-center' >
+                                            <ReactCountryFlag style={{width: '32px', height: '32px'}}  className='rounded-full mr-3'
+                                                svg
+                                                cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                                                cdnSuffix="svg" countryCode={item.countryCode} />{item.location}
+                                        </Td> 
                                     </Tr> 
                                 )
                             })}
                         </Tbody> 
                     </Table>
+                    // <img src={Flag} className='rounded-full mr-3' alt='nig' />
                 }
             </div>
         </div>

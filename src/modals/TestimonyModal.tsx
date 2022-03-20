@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactCountryFlag from 'react-country-flag';
 import Flag from '../assets/images/flag.png'
 
 export default function TestimonyModal(props: any) { 
@@ -42,7 +43,10 @@ export default function TestimonyModal(props: any) {
                         <p className='font-Poppins-Regular mt-2 text-sm' >{props.value.phone}</p>
                         <p style={{color: '#727272'}} className='font-Poppins-Regular mt-4' >LOCATION</p>
                         <div className='flex items-center mt-4'>
-                            <img src={Flag} className='rounded-full' alt='nig' />
+                            <ReactCountryFlag style={{width: '32px', height: '32px'}}  className='rounded-full mr-3'
+                                svg
+                                cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                                cdnSuffix="svg" countryCode={props.value.countryCode} />
                             <p className='font-Poppins-Regular ml-3 text-sm' >{props.value.location}</p>
                         </div> 
                     </div>
