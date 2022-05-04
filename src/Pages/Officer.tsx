@@ -21,6 +21,121 @@ export default function Officer() {
         {
             image: Pic,
             title: 'Pst.',
+            name: 'Charles Adegboyega Obasa',
+            postion: 'PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Goke Kuti ',
+            postion: 'PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Nat Adejuwon',
+            postion: 'PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Bisi Akande',
+            postion: 'SENIOR PERSONAL ASSISTANT TO CO'
+        }, 
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Toyin Olugbemi',
+            postion: 'PERSONAL ASSISTANT TO CO ON CRFI'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Precious Akingbade',
+            postion: 'PERSONAL ASSISTANT TO CO'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Pst. 
+            Sola Owoeye',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        }, 
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        }, 
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        },
+        {
+            image: Pic,
+            title: 'Pst.',
+            name: 'Boniface Okenwa',
+            postion: 'ACO/PICR'
+        }, 
+        {
+            image: Pic,
+            title: 'Pst.',
             name: 'Boniface Okenwa',
             postion: 'ACO/PICR'
         },
