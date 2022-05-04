@@ -207,7 +207,7 @@ export default function Officer() {
                 <p style={{color:'#fff'}} className=' text-5xl text-center lg:text-left lg:text-7xl font-Poppins-Bold relative' >Officers</p>
                 <p style={{color:'#fff'}} className=' lg:text-lg mt-2 font-Poppins-Regular relative ' >CONTINENTAL / REGIONAL & PROVINCIAL</p>
             </div>  
-            <div className='w-full lg:py-14 lg:px-10 px-6 relative' >
+            <div className='w-full lg:py-14 lg:px-10 relative' >
                 <div className='w-full flex flex-col relative items-center lg:pt-0 pt-12 justify-center bg-white lg:p-12 lg:rounded-lg' > 
                     <img className='absolute hidden lg:flex h-630px my-auto right-0 ' src={Curve} alt='curve' />
                     <p style={{color:'#140457'}} className=' text-lg lg:text-2xl text-center lg:w-100 mx-auto font-Poppins-SemiBold' >RCCG AFRICA CONTINENT 3 (SOUTHWEST,NIGERIA/MIDDLE EAST)</p>
@@ -227,7 +227,7 @@ export default function Officer() {
                             <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >Continental Overseer (CO)</p>
                         </div>
                     </div> 
-                    <div className=' grid grid-cols-2 lg:grid-cols-5 gap-4 relative' > 
+                    <div className=' grid grid-cols-2 lg:grid-cols-5 gap-4 px-6 relative' > 
                         {Officers.map((item: any, index: any) => {
                             return( 
                                 <div key={index} className=' w-full lg:w-40' >
