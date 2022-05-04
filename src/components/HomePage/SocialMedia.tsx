@@ -10,7 +10,7 @@ export default function SocialMedia() {
                 <p className=' text-3xl text-white font-Poppins-Bold' >Social Media</p>
                 <div className=' w-full grid grid-cols-2 lg:grid-cols-3 gap-4 z-30 mt-14' >
                     <div className='w-full p-4 rounded-lg flex items-center' style={{background: 'radial-gradient(280.81% 460.22% at -29.23% -170.93%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%)'}} >
-                        <div className=' w-14 w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
+                        <div className=' w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
                             <img className='w-full' src={Youtube} alt='youtube' />
                         </div>
                         <div className='ml-4' >
@@ -19,7 +19,7 @@ export default function SocialMedia() {
                         </div>
                     </div>
                     <div className='w-full p-4 rounded-lg flex items-center' style={{background: 'radial-gradient(280.81% 460.22% at -29.23% -170.93%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%)'}} >
-                        <div className=' w-14 w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
+                        <div className=' w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
                             <img className='w-full' src={Youtube} alt='youtube' />
                         </div>
                         <div className='ml-4' >

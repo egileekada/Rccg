@@ -243,21 +243,21 @@ export default function Officer() {
                     <p style={{color:'#140457'}} className=' text-lg lg:text-2xl text-center mt-20 lg:w-100 mx-auto font-Poppins-SemiBold' >INTERCONTINENTAL OFFICERS WITHIN AFRICA 3</p>
                     <div className='grid grid-cols-2 lg:grid-cols-3 gap-4 py-10 pb-16 ' >
                         <div className='w-full lg:w-40' >
-                            <div className='h-auto bg-yellow-200 rounded-md' >
+                            <div className='h-auto rounded-md' >
                                 <img src={Pic25} alt='pst' className='rounded-md' />
                             </div>
                             <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Joseph Adeyokunnu</p>
                             <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >INTERCONTINENTAL OFFICER</p>
                         </div>
                         <div className='w-full lg:w-40' >
-                            <div className='h-auto bg-yellow-200 rounded-md' >
+                            <div className='h-auto rounded-md' >
                                 <img src={Pic26} alt='pst' className='rounded-md' />
                             </div>
                             <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Brown Oyitso</p>
                             <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >INTERCONTINENTAL OFFICER</p>
                         </div>
                         <div className=' w-full lg:w-40' >
-                            <div className='h-auto bg-yellow-200 rounded-md' >
+                            <div className='h-auto rounded-md' >
                                 <img src={Pic27} alt='pst' className='rounded-md' />
                             </div>
                             <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Idowu Iluyomade</p>
