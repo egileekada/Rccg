@@ -6,10 +6,13 @@ import { Input } from '@chakra-ui/input';
 import { Textarea } from '@chakra-ui/react';
 import * as axios from 'axios'   
 import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 export default function AnnouncementModal(props: any) {
 
     const [loading, setLoading] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const [modal, setModal] = React.useState(0);
     const navigate = useNavigate()
     const loginSchema = yup.object({  
         name: yup.string().required('Required'),   
@@ -37,9 +40,11 @@ export default function AnnouncementModal(props: any) {
     const NewEvent = async ()=> {
 
         if (!formik.dirty) {
-            alert('You have to fill in th form to continue'); 
+            setMessage('You have to fill in the form to continue')
+            setModal(2)  
         }else if (!formik.isValid) {
-            alert('You have to fill in the form correctly to continue'); 
+            setMessage('You have to fill in the form to continue')
+            setModal(2)  
         } else {
             try { 
 
@@ -51,21 +56,27 @@ export default function AnnouncementModal(props: any) {
                 })     
     
                 if (request.status === 200) {    
-                    // console.log(json)  
+                    setMessage('Data Added Successfully')
+                    setModal(1)  
                     const t1 = setTimeout(() => { 
                         props.close(false)
                         navigate(0)
                         clearTimeout(t1);
                     }, 1000); 
                 }else {
-                    // alert(json.message);
-                    // console.log(json)
-                    // setLoading(false);
+                    setMessage('Error Occured While Adding Data')
+                    setModal(2)  
                 } 
             } catch (error) {
-                console.log(error)
+                setMessage('Error Occured While Adding Data')
+                setModal(2) 
             } 
         }
+        const t1 = setTimeout(() => {  
+            setModal(0)       
+            setLoading(false)  
+            clearTimeout(t1); 
+        }, 2000);
     } 
 
     const EditEvent = async ()=> {  
@@ -80,20 +91,26 @@ export default function AnnouncementModal(props: any) {
             })     
 
             if (request.status === 200) {    
-                // console.log(json)  
+                setMessage('Data Added Successfully')
+                setModal(1)  
                 const t1 = setTimeout(() => { 
                     props.close(false)
                     navigate(0)
                     clearTimeout(t1);
-                }, 1000); 
+                }, 2000); 
             }else {
-                // alert(json.message);
-                // console.log(json)
-                // setLoading(false);
+                setMessage('Error Occured While Adding Data')
+                setModal(2) 
             } 
         } catch (error) {
-            console.log(error)
+            setMessage('Error Occured While Adding Data')
+            setModal(2) 
         } 
+        const t1 = setTimeout(() => {  
+            setModal(0)       
+            setLoading(false)  
+            clearTimeout(t1); 
+        }, 2000);
     }
 
     React.useEffect(() => {
@@ -103,6 +120,7 @@ export default function AnnouncementModal(props: any) {
 
     return (
         <div className='bg-white pb-20' style={{width: '900px'}} >
+            <Modal message={message} modal={modal} />
             <div style={{backgroundColor: '#28166F'}} className=' w-full flex items-center  px-12 h-28' >
                 <p className='text-xl text-white font-Poppins-Medium ' >Annoucement</p>
                 <div onClick={()=> props.close(false)} className='w-8 h-8 ml-auto rounded-full border border-white cursor-pointer flex justify-center items-center' >

@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import * as axios from 'axios'   
 import { useFormik } from 'formik'; 
 import { useNavigate } from 'react-router-dom'
+import Modal from './Modal'
 
 export default function DevotionModal(props: any) { 
   
@@ -17,6 +18,8 @@ export default function DevotionModal(props: any) {
     const navigate = useNavigate()
     const [intialstartDate, setIntialStartDate] = React.useState(''); 
     
+    const [message, setMessage] = React.useState('');
+    const [modal, setModal] = React.useState(0);  
     const loginSchema = yup.object({     
         description: yup.string().required('Required'), 
     })  
@@ -74,11 +77,14 @@ export default function DevotionModal(props: any) {
     const NewEvent = async ()=> {
 
         if (!formik.dirty) {
-            alert('You have to fill in th form to continue'); 
+            setMessage('You have to fill in the form to continue')
+            setModal(2)   
         }else if (!formik.isValid) {
-            alert('You have to fill in the form correctly to continue'); 
+            setMessage('You have to fill in the form to continue')
+            setModal(2)   
         }else if (intialstartDate === '') {
-            alert('You have to set a Date and Time to continue'); 
+            setMessage('You have to set a Date and Time to continue')
+            setModal(2)    
         }else {
             try { 
 
@@ -93,22 +99,27 @@ export default function DevotionModal(props: any) {
                 })    
     
             if (request.status === 200) {    
-                // console.log(json)  
-                const t1 = setTimeout(() => { 
-                    // props.close(false)
+                setMessage('Data Added Successfully')
+                setModal(1)  
+                const t1 = setTimeout(() => {    
                     navigate(0)
                     clearTimeout(t1);
-                }, 1000); 
+                }, 2000); 
             }else {
-                // alert(json.message);
-                // console.log(json)
-                // setLoading(false);
+                setMessage('Error Occured While Adding Data')
+                setModal(2)     
             }
                     
             } catch (error) {
-                console.log(error)
+                setMessage('Error Occured While Adding Data')
+                setModal(2)  
             } 
         }
+        const t1 = setTimeout(() => {  
+            setModal(0)       
+            setLoading(false)  
+            clearTimeout(t1); 
+        }, 2000);
     } 
 
     const EditEvent = async ()=> { 
@@ -131,26 +142,33 @@ export default function DevotionModal(props: any) {
                 }
             })    
 
-        if (request.status === 200) {    
-            // console.log(json)  
+        if (request.status === 200) {  
+            setMessage('Data Edited Successfully')
+            setModal(1)     
             const t1 = setTimeout(() => { 
                 // props.close(false)
                 navigate(0)
                 clearTimeout(t1);
-            }, 1000); 
+            }, 2000); 
         }else {
-            // alert(json.message);
-            // console.log(json)
-            // setLoading(false);
+            setMessage('Error Occured While Adding Data')
+            setModal(2)   
         }
                 
         } catch (error) {
-            console.log(error)
+            setMessage('Error Occured While Adding Data')
+            setModal(2)   
         } 
+        const t1 = setTimeout(() => {  
+            setModal(0)       
+            setLoading(false)  
+            clearTimeout(t1); 
+        }, 2000);
     }
 
     return (
         <div className='bg-white pb-20' style={{width: '900px'}} >
+            <Modal message={message} modal={modal} />
             <div style={{backgroundColor: '#28166F'}} className=' w-full flex items-center  px-12 h-28' >
                 <div> 
                     <p className='text-xl text-white font-Poppins-Medium ' >Today’s Devotion</p>

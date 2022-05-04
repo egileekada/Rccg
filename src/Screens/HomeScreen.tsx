@@ -5,6 +5,8 @@ import EventComponent from '../components/HomeComponents/EventComponent';
 import QuoteComponent from '../components/HomeComponents/QuoteComponent';
 
 import { useNavigate } from 'react-router-dom'
+import Youtube from '../components/HomeComponents/Youtube';
+import PodCodComponent from '../components/HomeComponents/PodCodComponent';
 
 export default function HomeScreen(props: any) {
 
@@ -56,6 +58,8 @@ export default function HomeScreen(props: any) {
                 <p onClick={()=> ClickHandler('1')} className={tab === '1' ? 'text-white bg-active px-3 h-12 flex justify-center items-center rounded mx-4 cursor-pointer' : 'mx-4 cursor-pointer'} >Devotion</p>
                 <p onClick={()=> ClickHandler('2')} className={tab === '2' ? 'text-white bg-active px-3 h-12 flex justify-center items-center rounded mx-4 cursor-pointer' : 'mx-4 cursor-pointer'} >Announcement</p>
                 <p onClick={()=> ClickHandler('3')} className={tab === '3' ? 'text-white bg-active px-3 h-12 flex justify-center items-center rounded mx-4 cursor-pointer' : 'mx-4 cursor-pointer'} >Quotes</p>
+                <p onClick={()=> ClickHandler('4')} className={tab === '4' ? 'text-white bg-active px-3 h-12 flex justify-center items-center rounded mx-4 cursor-pointer' : 'mx-4 cursor-pointer'} >YouTube</p>
+                <p onClick={()=> ClickHandler('5')} className={tab === '5' ? 'text-white bg-active px-3 h-12 flex justify-center items-center rounded mx-4 cursor-pointer' : 'mx-4 cursor-pointer'} >PodCast</p>
             </div>
             <div className='w-full h-full px-4' >
                 {tab === '0' ? 
@@ -65,7 +69,11 @@ export default function HomeScreen(props: any) {
                                 tab === '2' ? 
                                     <AnnouncementComponent />:
                                         tab === '3' ? 
-                                            <QuoteComponent />
+                                            <QuoteComponent />:
+                                                tab === '4' ? 
+                                                    <Youtube />:
+                                                        tab === '5' ? 
+                                                            <PodCodComponent />
                 :null}
             </div>
         </div>
