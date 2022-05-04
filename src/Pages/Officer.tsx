@@ -2,6 +2,31 @@ import React from 'react';
 import HeaderImage from '../assets/images/HeaderImage2.png'
 import Pic from '../assets/images/1.png'
 import Pic2 from '../assets/images/2.png'
+import Pic3 from '../assets/images/3.png'
+import Pic4 from '../assets/images/4.png'
+import Pic5 from '../assets/images/5.png'
+import Pic6 from '../assets/images/6.png'
+import Pic7 from '../assets/images/7.png'
+import Pic8 from '../assets/images/8.png'
+import Pic9 from '../assets/images/9.png'
+import Pic10 from '../assets/images/10.png'
+import Pic11 from '../assets/images/11.png'
+import Pic12 from '../assets/images/12.png'
+import Pic13 from '../assets/images/13.png'
+import Pic14 from '../assets/images/14.png'
+import Pic15 from '../assets/images/15.png'
+import Pic16 from '../assets/images/16.png'
+import Pic17 from '../assets/images/17.png'
+import Pic18 from '../assets/images/18.png'
+import Pic19 from '../assets/images/19.png'
+import Pic20 from '../assets/images/20.png'
+import Pic21 from '../assets/images/21.png'
+import Pic22 from '../assets/images/22.png'
+import Pic23 from '../assets/images/23.png'
+import Pic24 from '../assets/images/24.png'
+import Pic25 from '../assets/images/25.png'
+import Pic26 from '../assets/images/26.png'
+import Pic27 from '../assets/images/27.png'
 import Curve from '../assets/images/curve.png'
 import Footer from '../components/Footer';
 import GoogleMap from '../components/HomePage/GoogleMap';
@@ -13,155 +38,154 @@ export default function Officer() {
 
     const Officers = [
         {
-            image: Pic,
+            image: Pic3,
             title: 'Pst.',
             name: 'Boniface Okenwa',
             postion: 'ACO/PICR'
+        }, 
+        {
+            image: Pic4,
+            title: 'Pst.',
+            name: 'Olujimi Ajibade ',
+            postion: 'ACO/PICR'
         },
         {
-            image: Pic,
+            image: Pic5,
+            title: 'Pst.',
+            name: 'Richard Adeboye',
+            postion: 'PICR'
+        },
+        {
+            image: Pic6,
+            title: 'Pst. ',
+            name: '(Mrs.) Sola Balogun ',
+            postion: 'ACO (Junior Church)'
+        },
+        {
+            image: Pic7,
+            title: 'Pst.',
+            name: '(Mrs.) Deola Mensah ',
+            postion: 'ACO (Protocols)'
+        },
+        {
+            image: Pic8,
+            title: 'Pst.',
+            name: 'Okey Mofunnanya ',
+            postion: 'ACO'
+        }, 
+        {
+            image: Pic9,
+            title: 'Pst.',
+            name: 'Efema Akioya ',
+            postion: 'SATCO'
+        },
+        {
+            image: Pic10,
+            title: 'Pst.',
+            name: 'Goke AjayI',
+            postion: 'SATCO'
+        },
+        {
+            image: Pic11,
+            title: 'Pst.',
+            name: 'Johnson Adediran ',
+            postion: 'PICR'
+        },
+        {
+            image: Pic12,
+            title: 'Pst.',
+            name: 'Charles Kpandei',
+            postion: 'PICR'
+        },
+        {
+            image: Pic13,
+            title: 'Pst.',
+            name: 'Tunde Abdulahi ',
+            postion: 'PICR'
+        },
+        {
+            image: Pic14,
             title: 'Pst.',
             name: 'Charles Adegboyega Obasa',
             postion: 'PICR'
         },
         {
-            image: Pic,
+            image: Pic15,
             title: 'Pst.',
             name: 'Goke Kuti ',
             postion: 'PICR'
         },
         {
-            image: Pic,
+            image: Pic16,
             title: 'Pst.',
             name: 'Nat Adejuwon',
             postion: 'PICR'
         },
         {
-            image: Pic,
+            image: Pic17,
             title: 'Pst.',
             name: 'Bisi Akande',
             postion: 'SENIOR PERSONAL ASSISTANT TO CO'
         }, 
         {
-            image: Pic,
+            image: Pic18,
             title: 'Pst.',
             name: 'Toyin Olugbemi',
             postion: 'PERSONAL ASSISTANT TO CO ON CRFI'
         },
         {
-            image: Pic,
+            image: Pic8,
             title: 'Pst.',
             name: 'Precious Akingbade',
             postion: 'PERSONAL ASSISTANT TO CO'
         },
         {
-            image: Pic,
+            image: Pic19,
             title: 'Pst.',
-            name: 'Pst. 
-            Sola Owoeye',
-            postion: 'ACO/PICR'
+            name: 'Sola Owoeye',
+            postion: 'PERSONAL ASSISTANT TO CO'
         },
         {
-            image: Pic,
+            image: Pic20,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Olooluwa Abioye',
+            postion: 'PERSONAL ASSISTANT TO CO '
         },
         {
-            image: Pic,
+            image: Pic8,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Sunday Olasoju',
+            postion: 'PERSONAL ASSISTANT TO CO'
         }, 
         {
-            image: Pic,
+            image: Pic21,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Amos Emovon',
+            postion: 'PERSONAL ASSISTANT TO CO '
         },
         {
-            image: Pic,
+            image: Pic22,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Seun Adebayo',
+            postion: 'CONTINENTAL ADMINISTRATOR'
         },
         {
-            image: Pic,
+            image: Pic8,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: '...',
+            postion: 'CONTINENTAL MUSIC DIRECTOR'
         },
         {
-            image: Pic,
+            image: Pic23,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Adetola Akinremi',
+            postion: 'CONTINENTAL CSR COORDINATOR'
         }, 
         {
-            image: Pic,
+            image: Pic24,
             title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        }, 
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
-        },
-        {
-            image: Pic,
-            title: 'Pst.',
-            name: 'Boniface Okenwa',
-            postion: 'ACO/PICR'
+            name: 'Joseph Adeyokunnu',
+            postion: 'CONTINENTAL FINANCE COORDINATOR '
         },
     ]
 
@@ -220,24 +244,24 @@ export default function Officer() {
                     <div className='grid grid-cols-2 lg:grid-cols-3 gap-4 py-10 pb-16 ' >
                         <div className='w-full lg:w-40' >
                             <div className='h-auto bg-yellow-200 rounded-md' >
-                                <img src={Pic} alt='pst' className='rounded-md' />
+                                <img src={Pic25} alt='pst' className='rounded-md' />
                             </div>
-                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>J.F. Odesola</p>
-                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >Continental Overseer (CO)</p>
+                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Joseph Adeyokunnu</p>
+                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >INTERCONTINENTAL OFFICER</p>
                         </div>
                         <div className='w-full lg:w-40' >
                             <div className='h-auto bg-yellow-200 rounded-md' >
-                                <img src={Pic2} alt='pst' className='rounded-md' />
+                                <img src={Pic26} alt='pst' className='rounded-md' />
                             </div>
-                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>J.F. Odesola</p>
-                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >Continental Overseer (CO)</p>
+                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Brown Oyitso</p>
+                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >INTERCONTINENTAL OFFICER</p>
                         </div>
                         <div className=' w-full lg:w-40' >
                             <div className='h-auto bg-yellow-200 rounded-md' >
-                                <img src={Pic2} alt='pst' className='rounded-md' />
+                                <img src={Pic27} alt='pst' className='rounded-md' />
                             </div>
-                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>J.F. Odesola</p>
-                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >Continental Overseer (CO)</p>
+                            <p style={{color: '#28166F'}} className='font-Poppins-Medium my-1 text-sm' >Pst. <br/>Idowu Iluyomade</p>
+                            <p style={{color: 'rgba(40, 22, 111, 0.6)'}} className='font-Poppins-Regular text-xs' >INTERCONTINENTAL OFFICER</p>
                         </div>
                     </div> 
                 </div> 

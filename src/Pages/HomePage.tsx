@@ -70,14 +70,14 @@ export default function HomePage() {
                 </div> 
                 
                 {/* Contact Us  */}
-                <div className=' w-auto lg:w-full flex items-center bg-white py-10 relative my-14 ' >
-                    <img className='w-full h-full  absolute hidden lg:flex top-0' src={SideImage} alt='pastor' />
+                <div className=' w-auto lg:w-full h-full flex items-center bg-white py-10 relative my-14 ' >
+                    <img className='w-full h-full  absolute object-cover hidden lg:flex top-0' src={SideImage} alt='pastor' />
                     <div className='flex relative flex-col flex-1 p-5 lg:py-0 py-14 lg:p-10 lg:ml-12' >  
                         <p style={{color:'#140457'}} className=' text-3xl z-30 lg:text-left text-center font-Poppins-SemiBold' >You Can Talk to Someone no matter what the challenge is.</p> 
                         <p style={{color:'rgba(71, 71, 71, 0.8)'}} className='z-30  font-Poppins-Regular my-4 text-justify' >There are competent & Spirit filled Counsellors, Pastors & Ministers willing to speak with you at any time. Don't keep it all in, speak to someone now.</p> 
                         <button onClick={()=> navigate('/aboutus')} style={{color:'#28166F', border: '1px solid #28166F'}} className='py-3 mt-7 text-sm w-44 rounded-md'>Speak with us</button>
                     </div>
-                    <div className=' hidden lg:flex w-100 h-full flex bg-blue-200 justify-center items-center' > 
+                    <div className=' hidden lg:flex w-100 h-full bg-blue-200 justify-center items-center' > 
                         
                     </div>
                 </div>
