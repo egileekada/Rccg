@@ -14,12 +14,12 @@ export default function YoutubeModal(props: any) {
     const [modal, setModal] = React.useState(0);
     const navigate = useNavigate()
     const loginSchema = yup.object({  
-        name: yup.string().required('Required'),   
-        announcement: yup.string().required('Required'), 
+        link: yup.string().required('Required'),   
+        title: yup.string().required('Required'), 
     }) 
  
     const formik = useFormik({
-        initialValues: {name: '', announcement: ''},
+        initialValues: {link: '', title: ''},
         validationSchema: loginSchema,
         onSubmit: () => {},
     });  
@@ -36,8 +36,9 @@ export default function YoutubeModal(props: any) {
         // setLoading(false)
     } 
  
-    const NewEvent = async ()=> {
+    const NewEvent = async ()=> { 
 
+        setLoading(true)
         if (!formik.dirty) {
             setMessage('You have to fill in the form to continue')
             setModal(2)  
@@ -48,7 +49,7 @@ export default function YoutubeModal(props: any) {
             try { 
 
                 // make request to server
-                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/announcements`, formik.values, {
+                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/youtube`, formik.values, {
                         headers: { 'content-type': 'application/json',
                         Authorization : `Bearer ${localStorage.getItem('token')}` 
                     }
@@ -150,39 +151,39 @@ export default function YoutubeModal(props: any) {
                 </div>  */}
                 <p className=' font-Poppins-Regular text-sm mb-2 mt-4' >Title</p>
                 <Input 
-                    name="name"
+                    name="title"
                     onChange={formik.handleChange}
                     onFocus={() =>
-                        formik.setFieldTouched("name", true, true)
+                        formik.setFieldTouched("title", true, true)
                     }   
                     size='lg' fontSize='sm' placeholder='' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
                 <div className="w-full h-auto pt-2">
-                    {formik.touched.name && formik.errors.name && (
+                    {formik.touched.title && formik.errors.title && (
                         <motion.p
                             initial={{ y: -100, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             className="text-xs font-Inter-Regular text-errorRed"
                         >
-                            {formik.errors.name}
+                            {formik.errors.title}
                         </motion.p>
                     )}
                 </div> 
                 <p className=' font-Poppins-Regular text-sm mb-2 mt-4' >YouTube Link</p>
                 <Input 
-                    name="name"
+                    name="link"
                     onChange={formik.handleChange}
                     onFocus={() =>
-                        formik.setFieldTouched("name", true, true)
+                        formik.setFieldTouched("link", true, true)
                     }   
                     size='lg' fontSize='sm' placeholder='' backgroundColor='white'borderWidth='1px' borderColor='#b8b8b8' />
                 <div className="w-full h-auto pt-2">
-                    {formik.touched.name && formik.errors.name && (
+                    {formik.touched.link && formik.errors.link && (
                         <motion.p
                             initial={{ y: -100, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             className="text-xs font-Inter-Regular text-errorRed"
                         >
-                            {formik.errors.name}
+                            {formik.errors.link}
                         </motion.p>
                     )}
                 </div> 
@@ -234,7 +235,7 @@ export default function YoutubeModal(props: any) {
                                 </> 
                         </button>
                     :
-                        <button onDoubleClick={()=> false} onClick={()=> submit()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
+                        <button onDoubleClick={()=> false} onClick={()=> NewEvent()} style={{backgroundColor: '#28166F'}} className='rounded-md flex items-center py-3 px-4 text-white text-sm font-Poppins-Medium mt-6 ml-auto' >
                             Upload Youtube Link
                         </button>
                     }  

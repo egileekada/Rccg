@@ -1,12 +1,26 @@
 import React from 'react'
+import { useQuery } from 'react-query'
 import YoutubeImage from '../../assets/images/youtube.png'
 import YoutubeModal from '../../modals/YoutubeModal'
 
 
 export default function Youtube() {
 
-    const data = ['Holy Ghost Services', 'April Services', ]
+    // const data = ['Holy Ghost Services', 'April Services', ]
     const [showModal, setShowModal] = React.useState(false) 
+
+    const { isLoading, data } = useQuery('youtube', () =>
+        fetch(`https://rccg-web-api.herokuapp.com/youtube`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res =>
+            res.json()
+        )
+    ) 
+
+    console.log(data)
 
     return (
         <div className='w-full pb-10' >
@@ -21,22 +35,67 @@ export default function Youtube() {
                     </svg>
                     <p className='ml-2' >New Youtube Link</p>
                 </button>
-            </div> 
-            <div className='mt-6 w-full grid grid-cols-4 gap-6' >
-                {data.map((item: any)=> {
-                    return(
-                        <div className='w-full border border-gray-500 cursor-pointer p-4 rounded-lg flex items-center' style={{background: 'radial-gradient(280.81% 460.22% at -29.23% -170.93%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%)'}} >
-                            <div className=' w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
-                                <img className='w-full' src={YoutubeImage} alt='youtube' />
-                            </div>
-                            <div className='ml-4' >
-                                <p className=' text-sm font-Poppins-Regular' >YOUTUBE</p>
-                                <p className=' text-xs font-Poppins-Medium' >{item}</p>
-                            </div>
-                        </div>
-                    )})
-                }
-            </div>
+            </div>  
+
+            {isLoading ?
+                <div className='w-full flex justify-center items-center h-20 mt-10' > 
+                    <svg
+                        width="70"
+                        height="70"
+                        viewBox="0 0 200 200"
+                        color="#28166F"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className='mr-4'>
+                        <defs>
+                            <linearGradient id="spinner-secondHalf">
+                            <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                            </linearGradient>
+                            <linearGradient id="spinner-firstHalf">
+                            <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+                            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+                            </linearGradient>
+                        </defs>
+
+                        <g stroke-width="8">
+                            <path stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+                            <path stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+                        
+                            <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            d="M 4 100 A 96 96 0 0 1 4 98"
+                            />
+                        </g>
+
+                        <animateTransform
+                            from="0 0 0"
+                            to="360 0 0"
+                            attributeName="transform"
+                            type="rotate"
+                            repeatCount="indefinite"
+                            dur="1300ms"
+                        />
+                    </svg>
+                </div>
+            : 
+                <div className='mt-6 w-full grid grid-cols-4 gap-6' >
+                    {data.map((item: any)=> {
+                        return(
+                            <a href={item.link} target="_blank" className='w-full border border-gray-500 cursor-pointer p-4 rounded-lg flex items-center' style={{background: 'radial-gradient(280.81% 460.22% at -29.23% -170.93%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%)'}} >
+                                <div className=' w-14 lg:w-16 lg:h-16 p-3 rounded-full border border-white' >
+                                    <img className='w-full' src={YoutubeImage} alt='youtube' />
+                                </div>
+                                <div className='ml-4' >
+                                    <p className=' text-sm font-Poppins-Regular' >YOUTUBE</p>
+                                    <p className=' text-xs font-Poppins-Medium' >{item.title}</p>
+                                </div>
+                            </a>
+                        )})
+                    }
+                </div>
+            }
             {showModal ? 
                 (
                     <>
