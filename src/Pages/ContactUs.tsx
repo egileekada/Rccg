@@ -310,9 +310,9 @@ export default function ContactUs() {
                 </div>
             </div>
             {/* Google Map */}
-            <div className='w-full lg:mt-4' >
+            {/* <div className='w-full lg:mt-4' >
                 <GoogleMap />
-            </div>
+            </div> */}
             <div className='w-full' >
                 <Footer />
             </div>

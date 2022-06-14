@@ -86,9 +86,9 @@ export default function Devotion() {
                 <SocialMedia />
             </div> 
             {/* Google Map */}
-            <div className='w-auto lg:w-full mt-14 ' >
+            {/* <div className='w-auto lg:w-full mt-14 ' >
                 <GoogleMap />
-            </div>
+            </div> */}
             <div className='w-auto lg:w-full' >
                 <Footer />
             </div>
