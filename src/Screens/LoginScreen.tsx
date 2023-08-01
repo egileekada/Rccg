@@ -53,7 +53,7 @@ export default function LoginScreen(props:any) {
           return;
         }else {
             setLoading(true);
-            const request = await fetch(`https://rccg-web-api.herokuapp.com/auth/login`, {
+            const request = await fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/auth/login`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
