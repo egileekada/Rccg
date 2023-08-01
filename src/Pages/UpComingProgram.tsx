@@ -9,7 +9,7 @@ export default function UpComingProgram() {
     const Array = [1, 2, 3, 4, 5, 6] 
 
     const { isLoading, data } = useQuery('event', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/events`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/events`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json' 
