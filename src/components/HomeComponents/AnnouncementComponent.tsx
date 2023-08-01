@@ -13,7 +13,7 @@ export default function AnnouncementComponent() {
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const { isLoading, data } = useQuery('announcement', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/announcements`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/announcements`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  
