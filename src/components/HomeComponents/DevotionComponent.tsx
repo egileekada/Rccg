@@ -13,7 +13,7 @@ export default function DevotionComponent() {
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const { isLoading, data } = useQuery('devotions', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/devotions`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/devotions`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  
