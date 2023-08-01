@@ -48,7 +48,7 @@ export default function PodCastModal(props: any) {
             try { 
 
                 // make request to server
-                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/announcements`, formik.values, {
+                const request = await axios.default.post(`https://rccg-api-b43b21fd7c4c.herokuapp.com/announcements`, formik.values, {
                         headers: { 'content-type': 'application/json',
                         Authorization : `Bearer ${localStorage.getItem('token')}` 
                     }
@@ -83,7 +83,7 @@ export default function PodCastModal(props: any) {
         try { 
 
             // make request to server
-            const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/announcements/${props.value._id}`, formik.values, {
+            const request = await axios.default.put(`https://rccg-api-b43b21fd7c4c.herokuapp.com/announcements/${props.value._id}`, formik.values, {
                     headers: { 'content-type': 'application/json',
                     Authorization : `Bearer ${localStorage.getItem('token')}` 
                 }
