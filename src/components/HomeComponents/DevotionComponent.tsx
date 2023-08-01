@@ -24,7 +24,7 @@ export default function DevotionComponent() {
     ) 
 
     const DeleteHandler =()=>{
-        fetch(`https://rccg-web-api.herokuapp.com/devotions/${index}`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/devotions/${index}`, {
             method: 'DELETE', // or ''PUT
             headers: {
                 'Content-Type': 'application/json' ,  Authorization : `Bearer ${localStorage.getItem('token')}`
