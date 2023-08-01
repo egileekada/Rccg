@@ -6,7 +6,7 @@ import TestimonyModal from '../modals/TestimonyModal';
 export default function TestimonyScreen() {
     
     const { isLoading, data } = useQuery('Testimonies', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/testimonies`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/testimonies`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  
