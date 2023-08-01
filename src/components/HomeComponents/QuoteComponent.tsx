@@ -13,7 +13,7 @@ export default function QuoteComponent() {
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const { isLoading, data } = useQuery('quotes', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/quotes`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/quotes`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  
@@ -21,12 +21,10 @@ export default function QuoteComponent() {
         }).then(res =>
             res.json()
         )
-    ) 
-
-    console.log(data)
+    )  
 
     const DeleteHandler =()=>{
-        fetch(`https://rccg-web-api.herokuapp.com/quotes/${index}`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/quotes/${index}`, {
             method: 'DELETE', // or ''PUT
             headers: {
                 'Content-Type': 'application/json' ,  Authorization : `Bearer ${localStorage.getItem('token')}`
