@@ -65,7 +65,7 @@ export default function FirstTimer() {
           return;
         }else {
             setLoading(true);
-            const request = await fetch(`https://rccg-web-api.herokuapp.com/first-timers`, {
+            const request = await fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/first-timers`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
