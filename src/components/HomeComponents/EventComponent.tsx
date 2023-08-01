@@ -13,7 +13,7 @@ export default function EventComponent() {
     const [showModal, setShowModal] = React.useState(false)
  
     const { isLoading, data } = useQuery('events', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/events`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/events`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export default function EventComponent() {
     } 
 
     const DeleteHandler =()=>{
-        fetch(`https://rccg-web-api.herokuapp.com/events/${index}`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/events/${index}`, {
             method: 'DELETE', // or ''PUT
             headers: {
                 'Content-Type': 'application/json' ,  Authorization : `Bearer ${localStorage.getItem('token')}`
