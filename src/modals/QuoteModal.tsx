@@ -47,7 +47,7 @@ export default function QuoteModal(props: any) {
             try { 
 
                 // make request to server
-                const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/quotes`, formik.values, {
+                const request = await axios.default.post(`https://rccg-api-b43b21fd7c4c.herokuapp.com/quotes`, formik.values, {
                         headers: { 'content-type': 'application/json',
                         Authorization : `Bearer ${localStorage.getItem('token')}` 
                     }
@@ -84,7 +84,7 @@ export default function QuoteModal(props: any) {
         try { 
     
             // make request to server
-            const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/quotes/${props.value._id}`, formik.values, {
+            const request = await axios.default.put(`https://rccg-api-b43b21fd7c4c.herokuapp.com/quotes/${props.value._id}`, formik.values, {
                     headers: { 'content-type': 'application/json',
                     Authorization : `Bearer ${localStorage.getItem('token')}` 
                 }
