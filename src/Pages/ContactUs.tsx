@@ -78,7 +78,7 @@ export default function ContactUs() {
             return;
         }else {
             setLoading(true);
-            const request = await fetch(`https://rccg-web-api.herokuapp.com/messages`, {
+            const request = await fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/messages`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
