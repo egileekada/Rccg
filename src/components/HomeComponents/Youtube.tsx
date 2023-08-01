@@ -10,7 +10,7 @@ export default function Youtube() {
     const [showModal, setShowModal] = React.useState(false) 
 
     const { isLoading, data } = useQuery('youtube', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/youtube`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/youtube`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json'
@@ -19,9 +19,7 @@ export default function Youtube() {
             res.json()
         )
     ) 
-
-    console.log(data)
-
+ 
     return (
         <div className='w-full pb-10' >
             <div className='w-full flex items-center' >
