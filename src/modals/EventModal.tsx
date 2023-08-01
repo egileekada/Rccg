@@ -72,7 +72,7 @@ export default function EventModal(props: any) {
                 formData.append('image', imageFile)  
 
                 // make request to server 
-                    const request = await axios.default.post(`https://rccg-web-api.herokuapp.com/events`, formData, {
+                    const request = await axios.default.post(`https://rccg-api-b43b21fd7c4c.herokuapp.com/events`, formData, {
                         headers: { 'content-type': 'application/json',
                         Authorization : `Bearer ${localStorage.getItem('token')}` 
                         }
@@ -123,7 +123,7 @@ export default function EventModal(props: any) {
                 formData.append('time', startDate.toJSON())  
             }  
             // make request to server 
-                const request = await axios.default.put(`https://rccg-web-api.herokuapp.com/events/${props.value._id}`, formData, {
+                const request = await axios.default.put(`https://rccg-api-b43b21fd7c4c.herokuapp.com/events/${props.value._id}`, formData, {
                     headers: { 'content-type': 'application/json',
                     Authorization : `Bearer ${localStorage.getItem('token')}` 
                     }
