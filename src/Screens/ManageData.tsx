@@ -8,7 +8,7 @@ import ReactCountryFlag from 'react-country-flag';
 export default function ManageData() {
 
     const { isLoading, data } = useQuery('attendance', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/attendance`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/attendance`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  Authorization : `Bearer ${localStorage.getItem('token')}`  
