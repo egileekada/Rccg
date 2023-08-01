@@ -88,7 +88,7 @@ export default function DataManagement() {
             setModal(2)   
         }else {
             setLoading(true);
-            const request = await fetch(`https://rccg-web-api.herokuapp.com/attendance`, {
+            const request = await fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/attendance`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
