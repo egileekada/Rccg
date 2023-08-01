@@ -46,7 +46,7 @@ const Information = [
 export default function RegistaredMembersScreen() { 
 
     const { isLoading, data } = useQuery('Registered', () =>
-        fetch(`https://rccg-web-api.herokuapp.com/first-timers`, {
+        fetch(`https://rccg-api-b43b21fd7c4c.herokuapp.com/first-timers`, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',  
